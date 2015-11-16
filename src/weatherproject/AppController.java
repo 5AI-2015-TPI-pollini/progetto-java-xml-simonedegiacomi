@@ -1,38 +1,51 @@
 package weatherproject;
 
-import MyGMaps.Address;
-import MyGMaps.InvalidPlace;
-import MyGMaps.ResultRetrivedListener;
-import MyGMaps.XMLGMaps;
+import MyGMaps.*;
+import MyWeather.Weather;
+import MyWeather.WeatherResultListener;
+import MyWeather.WeatherState;
+import MyWeather.XMLWeather;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.net.URL;
 import java.util.Arrays;
+import java.util.ResourceBundle;
 
 /**
  * Created by Simone on 15/11/2015.
  */
-public class AppController {
+public class AppController implements Initializable {
+    private GMaps gmaps;
+    private Weather weather;
+
+    private Address selectedAddress;
+    private Address[] retrivedAddesses;
+
     @FXML
     private TextField inputAddress;
     @FXML
     private ListView addressesList;
 
     @FXML
-    private void inputHandler () {
-        XMLGMaps maps = XMLGMaps.getInstance();
+    private void inputHandler() {
         try {
-            maps.find(inputAddress.getText(), new ResultRetrivedListener() {
+            gmaps.find(inputAddress.getText(), new ResultRetrivedListener() {
                 @Override
                 public void onResult(Address[] result) {
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
                             addressesList.getItems().clear();
+                            retrivedAddesses = result;
                             addressesList.getItems().addAll(result);
                         }
                     });
@@ -42,5 +55,30 @@ public class AppController {
         } catch (InvalidPlace invalidPlace) {
             invalidPlace.printStackTrace();
         }
+    }
+
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        gmaps = XMLGMaps.getInstance();
+        weather = new XMLWeather("apikey");
+
+        addressesList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                selectedAddress = retrivedAddesses[addressesList.getSelectionModel().getSelectedIndex()];
+                // Get weather informations
+                try {
+                    weather.getActualWeather(selectedAddress.getCoordinate(), new WeatherResultListener() {
+                        @Override
+                        public void onResult(WeatherState[] states) {
+                            System.out.println(states[0]);
+                        }
+                    });
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
     }
 }

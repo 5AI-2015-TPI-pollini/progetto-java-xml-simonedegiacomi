@@ -1,11 +1,15 @@
 package MyWeather;
 
 import MyGMaps.Coordinate;
+import MyGMaps.InvalidPlace;
 import MyHTTP.DataRetrivedListener;
 import MyHTTP.XMLRetriver;
 import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
 
 import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
 
 /**
@@ -13,28 +17,40 @@ import javax.xml.xpath.XPathFactory;
  */
 public class XMLWeather implements Weather {
     private static final XPathFactory xpathFactory = XPathFactory.newInstance();
-    private XMLRetriver retriver;
 
-    public XMLWeather (Coordinate place) {
-        retriver = new XMLRetriver(OpenWeatherMapURLGenerator.generateURL(place, OpenWeatherMapURLGenerator.XML));
+    private static final String QUERY_CURRENT_STATE = "/current/weather[\"value\"]/text()";
+
+    private final String apiKey;
+
+    public XMLWeather (String apiKey) {
+        this.apiKey = apiKey;
     }
 
     @Override
-    public void getActualWeather(WeatherResultListener listener) {
+    public void getActualWeather(Coordinate place, WeatherResultListener listener) throws InvalidPlace {
+        XMLRetriver retriver = new XMLRetriver(OpenWeatherMapURLGenerator.generateURL(apiKey, place, OpenWeatherMapURLGenerator.ACTUAL_WEATHER, OpenWeatherMapURLGenerator.XML));
         retriver.retriveResult(new DataRetrivedListener() {
             @Override
             public void onResult(Object data) {
                 Document xml = (Document) data;
                 XPath xpath = xpathFactory.newXPath();
-
-                WeatherState states[] = new WeatherState[1];
-                listener.onResult(states);
+                try {
+                    XPathExpression currentState = xpath.compile(QUERY_CURRENT_STATE);
+                    WeatherState states[] = new WeatherState[1];
+                    states[0] = new WeatherState();
+                    states[0].setDescription(((NodeList) (currentState.evaluate(xml, XPathConstants.NODESET))).item(0).getNodeValue());
+                    listener.onResult(states);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    listener.onResult(null);
+                }
             }
         });
     }
 
     @Override
-    public void getForecast(WeatherResultListener listener) {
+    public void getForecast(Coordinate place, WeatherResultListener listener) throws InvalidPlace {
+        XMLRetriver retriver = new XMLRetriver(OpenWeatherMapURLGenerator.generateURL(apiKey, place, OpenWeatherMapURLGenerator.FORECAST, OpenWeatherMapURLGenerator.XML));
         retriver.retriveResult(new DataRetrivedListener() {
             @Override
             public void onResult(Object data) {
