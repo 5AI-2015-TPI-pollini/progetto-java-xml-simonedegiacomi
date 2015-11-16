@@ -34,7 +34,7 @@ public class XMLWeather implements Weather {
     }
 
     @Override
-    public void getFirecast(WeatherResultListener listener) {
+    public void getForecast(WeatherResultListener listener) {
         retriver.retriveResult(new DataRetrivedListener() {
             @Override
             public void onResult(Object data) {

@@ -8,5 +8,5 @@ import MyGMaps.Coordinate;
 public interface Weather {
     public void getActualWeather (WeatherResultListener listener);
 
-    public void getFirecast (WeatherResultListener listener);
+    public void getForecast(WeatherResultListener listener);
 }

@@ -10,32 +10,40 @@ import javax.xml.xpath.*;
 
 
 /**
+ * This class is used to call the Google Maps Geocode API using XML
  * Created by Simone on 15/11/2015.
  */
 public class XMLGMaps implements GMaps{
-    private static final XPathFactory xpathFactory = XPathFactory.newInstance();
+    /**
+     * XPath query to select the formatted address
+     */
     private static final String QUERY_FORMATTED = "/GeocodeResponse/result/formatted_address/text()";
     private static final String QUERY_LATITUDE = "/GeocodeResponse/result/geometry/location/lat/text()";
     private static final String QUERY_LONGITUDE = "/GeocodeResponse/result/geometry/location/lng/text()";
+    /**
+     * XPath factory
+     */
+    private static final XPathFactory xpathFactory = XPathFactory.newInstance();
 
-    private String place;
-    private XMLRetriver retriver;
+    private static XMLGMaps instance;
 
-    public XMLGMaps (String place) throws InvalidPlace{
-        this.place = place;
-        try {
-            retriver = new XMLRetriver(GeocodeURLGenerator.generateURL(GeocodeURLGenerator.XML, place));
-        } catch (Exception e) {
-            throw new InvalidPlace();
-        }
+    public static XMLGMaps getInstance() {
+        if(instance == null)
+            instance = new XMLGMaps();
+        return instance;
     }
 
+    private XMLGMaps() {}
+
     @Override
-    public void find(ResultRetrivedListener listener) {
+    public void find(String place, ResultRetrivedListener listener) throws InvalidPlace {
+        XMLRetriver retriver = new XMLRetriver(GeocodeURLGenerator.generateURL(GeocodeURLGenerator.XML, place));
+        // Retrive the XML
         retriver.retriveResult(new DataRetrivedListener() {
             @Override
             public void onResult(Object data) {
                 Document xml = (Document) data;
+                // Create xpath
                 XPath xpath = xpathFactory.newXPath();
                 try {
                     // Prepare the queries

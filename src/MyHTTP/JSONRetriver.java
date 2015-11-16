@@ -1,5 +1,9 @@
 package MyHTTP;
 
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -19,7 +23,17 @@ public class JSONRetriver implements DataRetriver {
         new Thread(new Runnable() {
             @Override
             public void run() {
-
+                try {
+                    URLConnection conn = url.openConnection();
+                    BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    StringBuilder jsonString = new StringBuilder();
+                    String temp;
+                    while ((temp = in.readLine()) != null)
+                        jsonString.append(temp);
+                    listener.onResult(new JSONObject(jsonString.toString()));
+                } catch (Exception ex) {
+                    listener.onResult(null);
+                }
             }
         }).start();
     }
