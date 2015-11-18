@@ -15,20 +15,19 @@ import javax.xml.xpath.XPathFactory;
 /**
  * Created by Simone on 15/11/2015.
  */
-public class XMLWeather implements Weather {
+public class XMLWeather extends Weather {
     private static final XPathFactory xpathFactory = XPathFactory.newInstance();
 
     private static final String QUERY_CURRENT_STATE = "/current/weather[\"value\"]/text()";
 
-    private final String apiKey;
-
-    public XMLWeather (String apiKey) {
-        this.apiKey = apiKey;
+    public XMLWeather(Coordinate place) {
+        super(place);
     }
 
+
     @Override
-    public void getActualWeather(Coordinate place, WeatherResultListener listener) throws InvalidPlace {
-        XMLRetriver retriver = new XMLRetriver(OpenWeatherMapURLGenerator.generateURL(apiKey, place, OpenWeatherMapURLGenerator.ACTUAL_WEATHER, OpenWeatherMapURLGenerator.XML));
+    public void getActualWeather(WeatherResultListener listener) throws InvalidPlace {
+        XMLRetriver retriver = new XMLRetriver(OpenWeatherMapURLGenerator.generateURL(place, OpenWeatherMapURLGenerator.ACTUAL_WEATHER, OpenWeatherMapURLGenerator.XML));
         retriver.retriveResult(new DataRetrivedListener() {
             @Override
             public void onResult(Object data) {
@@ -49,8 +48,8 @@ public class XMLWeather implements Weather {
     }
 
     @Override
-    public void getForecast(Coordinate place, WeatherResultListener listener) throws InvalidPlace {
-        XMLRetriver retriver = new XMLRetriver(OpenWeatherMapURLGenerator.generateURL(apiKey, place, OpenWeatherMapURLGenerator.FORECAST, OpenWeatherMapURLGenerator.XML));
+    public void getForecast(WeatherResultListener listener) throws InvalidPlace {
+        XMLRetriver retriver = new XMLRetriver(OpenWeatherMapURLGenerator.generateURL(place, OpenWeatherMapURLGenerator.FORECAST, OpenWeatherMapURLGenerator.XML));
         retriver.retriveResult(new DataRetrivedListener() {
             @Override
             public void onResult(Object data) {

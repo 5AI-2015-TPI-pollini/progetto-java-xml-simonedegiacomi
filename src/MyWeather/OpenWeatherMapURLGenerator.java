@@ -2,6 +2,7 @@ package MyWeather;
 
 import MyGMaps.Coordinate;
 import MyGMaps.InvalidPlace;
+import weatherproject.Config;
 
 import java.net.URL;
 
@@ -20,7 +21,7 @@ public class OpenWeatherMapURLGenerator {
     private static final String openWeatherUrl = "http://api.openweathermap.org/data/2.5/";
 
 
-    public static URL generateURL (String apiKey, Coordinate coordinate, int request, int resultType) throws InvalidPlace {
+    public static URL generateURL (Coordinate coordinate, int request, int resultType) throws InvalidPlace {
         StringBuilder urlString = new StringBuilder(openWeatherUrl);
         urlString.append(forecastType[request]);
         urlString.append("?mode=");
@@ -30,7 +31,7 @@ public class OpenWeatherMapURLGenerator {
         urlString.append("&lon=");
         urlString.append(coordinate.getLongitude());
         urlString.append("&appid=");
-        urlString.append(apiKey);
+        urlString.append(Config.getInstance().getString("API_KEY"));
         System.out.println(urlString.toString());
         try {
             return new URL(urlString.toString());

@@ -13,7 +13,7 @@ import javax.xml.xpath.*;
  * This class is used to call the Google Maps Geocode API using XML
  * Created by Simone on 15/11/2015.
  */
-public class XMLGMaps implements GMaps{
+public class XMLGMaps extends GMaps {
     /**
      * XPath query to select the formatted address
      */
@@ -25,15 +25,7 @@ public class XMLGMaps implements GMaps{
      */
     private static final XPathFactory xpathFactory = XPathFactory.newInstance();
 
-    private static XMLGMaps instance;
-
-    public static XMLGMaps getInstance() {
-        if(instance == null)
-            instance = new XMLGMaps();
-        return instance;
-    }
-
-    private XMLGMaps() {}
+    public XMLGMaps() {}
 
     @Override
     public void find(String place, ResultRetrivedListener listener) throws InvalidPlace {

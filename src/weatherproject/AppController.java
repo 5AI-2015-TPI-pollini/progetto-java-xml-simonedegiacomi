@@ -60,16 +60,15 @@ public class AppController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        gmaps = XMLGMaps.getInstance();
-        weather = new XMLWeather("apikey");
-
+        gmaps = GMaps.getGMaps();
         addressesList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
                 selectedAddress = retrivedAddesses[addressesList.getSelectionModel().getSelectedIndex()];
                 // Get weather informations
+                weather = Weather.getWeather(selectedAddress.getCoordinate());
                 try {
-                    weather.getActualWeather(selectedAddress.getCoordinate(), new WeatherResultListener() {
+                    weather.getActualWeather(new WeatherResultListener() {
                         @Override
                         public void onResult(WeatherState[] states) {
                             System.out.println(states[0]);
