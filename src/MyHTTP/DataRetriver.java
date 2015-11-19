@@ -1,7 +1,5 @@
 package MyHTTP;
 
-import java.net.URL;
-
 /**
  * Generic HTTP Data retriver
  * Created by Simone on 14/11/2015.

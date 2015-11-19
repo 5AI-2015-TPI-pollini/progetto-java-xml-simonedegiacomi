@@ -19,6 +19,13 @@ public class XMLWeather extends Weather {
     private static final XPathFactory xpathFactory = XPathFactory.newInstance();
 
     private static final String QUERY_CURRENT_STATE = "/current/weather[\"value\"]/text()";
+    private static final String QUERY_CURRENT_TEMP = "/current/temperature[\"value\"]/text()";
+    private static final String QUERY_CURRENT_MAX = "/current/temperature[\"max\"]/text()";
+    private static final String QUERY_CURRENT_MIN = "/current/temperature[\"min\"]/text()";
+
+    private static final String QUERY_FORECTAST_TIME = "";
+    private static final String QUERY_FORECTAST_DESCRIPTION = "";
+    private static final String QUERY_FORECTAST_TEMPERATURE = "";
 
     public XMLWeather(Coordinate place) {
         super(place);
@@ -35,9 +42,17 @@ public class XMLWeather extends Weather {
                 XPath xpath = xpathFactory.newXPath();
                 try {
                     XPathExpression currentState = xpath.compile(QUERY_CURRENT_STATE);
+                    XPathExpression temperature = xpath.compile(QUERY_CURRENT_TEMP);
+                    XPathExpression temperatureMax = xpath.compile(QUERY_CURRENT_MAX);
+                    XPathExpression temperatureMin = xpath.compile(QUERY_CURRENT_MIN);
                     WeatherState states[] = new WeatherState[1];
-                    states[0] = new WeatherState();
-                    states[0].setDescription(((NodeList) (currentState.evaluate(xml, XPathConstants.NODESET))).item(0).getNodeValue());
+                    WeatherState state = new WeatherState();
+                    states[0] = state;
+                    state.setDescription(((NodeList) (currentState.evaluate(xml, XPathConstants.NODESET))).item(0).getNodeValue());
+                    Temperature temp = new Temperature(((NodeList) (temperature.evaluate(xml, XPathConstants.NODESET))).item(0).getNodeValue(),
+                            ((NodeList) (currentState.evaluate(xml, XPathConstants.NODESET))).item(0).getNodeValue(),
+                            ((NodeList) (currentState.evaluate(xml, XPathConstants.NODESET))).item(0).getNodeValue());
+                    state.setTemperature(temp);
                     listener.onResult(states);
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -53,11 +68,24 @@ public class XMLWeather extends Weather {
         retriver.retriveResult(new DataRetrivedListener() {
             @Override
             public void onResult(Object data) {
-                if (data == null)
-                    listener.onResult(null);
                 Document xml = (Document) data;
-                WeatherState states[] = null;
-                listener.onResult(states);
+                XPath xpath = xpathFactory.newXPath();
+                try {
+                    NodeList times = xpath.compile(QUERY_FORECTAST_TIME).evaluate(xml, XPathConstants.NODESET);
+                    NodeList descriptions = xpath.compile(QUERY_FORECTAST_DESCRIPTION).evaluate(xml, XPathConstants.NODESET);
+                    NodeList temperatures = xpath.compile(QUERY_FORECTAST_TEMPERATURE).evaluate(xml, XPathConstants.NODESET);
+                    WeatherState[] states = new WeatherState[times.getLength()];
+                    for(int i = 0; i < states.length ; i++) {
+                        WeatherState state = new WeatherState();
+                        state.setDescription(descriptions.item(i).getNodeValue());
+                        state.setTemperature(new Temperature(temperatures.item(i).getNodeValue()));
+                        states[i] = state;
+                    }
+                    listener.onResult(states);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    listener.onResult(null);
+                }
             }
         });
     }

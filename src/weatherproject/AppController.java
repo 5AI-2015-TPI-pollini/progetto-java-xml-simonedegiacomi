@@ -1,23 +1,24 @@
 package weatherproject;
 
-import MyGMaps.*;
+import MyGMaps.Address;
+import MyGMaps.GMaps;
+import MyGMaps.InvalidPlace;
+import MyGMaps.ResultRetrivedListener;
 import MyWeather.Weather;
 import MyWeather.WeatherResultListener;
 import MyWeather.WeatherState;
-import MyWeather.XMLWeather;
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
+import javafx.scene.image.ImageView;
 
+import java.io.FileOutputStream;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.ResourceBundle;
 
 /**
@@ -34,6 +35,8 @@ public class AppController implements Initializable {
     private TextField inputAddress;
     @FXML
     private ListView addressesList;
+    @FXML
+    private ImageView mainIcon;
 
     @FXML
     private void inputHandler() {
@@ -56,7 +59,13 @@ public class AppController implements Initializable {
             invalidPlace.printStackTrace();
         }
     }
-
+    @FXML
+    private void close() {
+        try {
+            Config.getInstance().saveConfig(new FileOutputStream(Config.DEFAULT_CONFIG_FILE));
+        } catch (Exception ex) {}
+        System.exit(0);
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -71,7 +80,7 @@ public class AppController implements Initializable {
                     weather.getActualWeather(new WeatherResultListener() {
                         @Override
                         public void onResult(WeatherState[] states) {
-                            System.out.println(states[0]);
+                            showActualWeather(states[0]);
                         }
                     });
                 } catch (Exception ex) {
@@ -79,5 +88,19 @@ public class AppController implements Initializable {
                 }
             }
         });
+    }
+
+    private void showActualWeather(WeatherState state) {
+
+    }
+
+    @FXML
+    private void showAbout() {
+        Alert about = new Alert();
+        about.setAlertType(Alert.AlertType.INFORMATION);
+        about.setTitle("About");
+        about.setHeaderText("WeatherProject");
+        about.setContentText("WeatherProject is a open source project. You can find other informations on gitthub");
+        about.show();
     }
 }

@@ -7,6 +7,8 @@ import java.util.HashMap;
  * Created by Simone on 18/11/2015.
  */
 public class Config implements Serializable {
+    public static final String DEFAULT_CONFIG_FILE = ".wpconfig";
+
     public static final int XML = 0;
     public static final int JSON = 1;
 

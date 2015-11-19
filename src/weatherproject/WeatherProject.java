@@ -7,13 +7,11 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 
 /**
  * Created by Simone on 15/11/2015.
  */
 public class WeatherProject extends Application {
-    private static final String DEFAULT_CONFIG_FILE = ".wcconf";
 
     public static void main (String[] args) {
         loadConfig();
@@ -22,7 +20,7 @@ public class WeatherProject extends Application {
 
     private static void loadConfig () {
         try {
-            Config.loadConfig(new FileInputStream(DEFAULT_CONFIG_FILE));
+            Config.loadConfig(new FileInputStream(Config.DEFAULT_CONFIG_FILE));
         } catch (Exception ex) {
             Config.getInstance().setString("API_KEY", "");
         }

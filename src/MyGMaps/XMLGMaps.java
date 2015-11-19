@@ -5,8 +5,10 @@ import MyHTTP.XMLRetriver;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
-import javax.xml.soap.Node;
-import javax.xml.xpath.*;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathFactory;
 
 
 /**

@@ -15,8 +15,8 @@ public abstract class Weather {
         switch (Config.getInstance().getDataType()) {
             case Config.XML:
                 return new XMLWeather(place);
-            //case Config.JSON:
-            //    return new JSONWeather(place);
+            case Config.JSON:
+                return new JSONWeather(place);
         }
         return null;
     }
