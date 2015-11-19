@@ -118,7 +118,8 @@ public class AppController implements Initializable {
             dialogStage.initModality(Modality.WINDOW_MODAL);
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
-            dialogStage.show();
+            ((PreferencesController)loader.getController()).setDialogStage(dialogStage);
+            dialogStage.showAndWait();
         } catch (Exception ex) {
             ex.printStackTrace();
         }

@@ -21,7 +21,7 @@ public class Config implements Serializable {
     }
 
     private int dataType;
-    private HashMap<String, String> strings;
+    private HashMap<String, Object> params;
 
     private Config() {
         dataType = XML;
@@ -49,10 +49,14 @@ public class Config implements Serializable {
     }
 
     public String getString (String key) {
-        return strings.get(key);
+        return params.get(key);
     }
 
     public void setString (String key, String value) {
-        strings.put(key, value);
+        params.put(key, value);
     }
+
+    public boolean getBoolean (String key) { return params.get(key); }
+
+    public void setBoolean (String key, boolean value) { params.put(key, value); }
 }

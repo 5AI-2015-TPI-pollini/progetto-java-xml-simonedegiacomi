@@ -28,12 +28,10 @@ public class WeatherProject extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-
         Parent root = FXMLLoader.load(getClass().getResource("../res/window.fxml"));
         primaryStage.setTitle("WeatherProject");
         primaryStage.setScene(new Scene(root, 700, 300));
         primaryStage.show();
-
     }
 
 
