@@ -27,13 +27,8 @@ public class XMLWeather extends Weather {
     private static final String QUERY_FORECTAST_DESCRIPTION = "";
     private static final String QUERY_FORECTAST_TEMPERATURE = "";
 
-    public XMLWeather(Coordinate place) {
-        super(place);
-    }
-
-
     @Override
-    public void getActualWeather(WeatherResultListener listener) throws InvalidPlace {
+    public void getActualWeather(Coordinate place, WeatherResultListener listener) throws InvalidPlace {
         XMLRetriver retriver = new XMLRetriver(OpenWeatherMapURLGenerator.generateURL(place, OpenWeatherMapURLGenerator.ACTUAL_WEATHER, OpenWeatherMapURLGenerator.XML));
         retriver.retriveResult(new DataRetrivedListener() {
             @Override
@@ -63,7 +58,7 @@ public class XMLWeather extends Weather {
     }
 
     @Override
-    public void getForecast(WeatherResultListener listener) throws InvalidPlace {
+    public void getForecast(Coordinate place, WeatherResultListener listener) throws InvalidPlace {
         XMLRetriver retriver = new XMLRetriver(OpenWeatherMapURLGenerator.generateURL(place, OpenWeatherMapURLGenerator.FORECAST, OpenWeatherMapURLGenerator.XML));
         retriver.retriveResult(new DataRetrivedListener() {
             @Override
@@ -71,9 +66,9 @@ public class XMLWeather extends Weather {
                 Document xml = (Document) data;
                 XPath xpath = xpathFactory.newXPath();
                 try {
-                    NodeList times = xpath.compile(QUERY_FORECTAST_TIME).evaluate(xml, XPathConstants.NODESET);
-                    NodeList descriptions = xpath.compile(QUERY_FORECTAST_DESCRIPTION).evaluate(xml, XPathConstants.NODESET);
-                    NodeList temperatures = xpath.compile(QUERY_FORECTAST_TEMPERATURE).evaluate(xml, XPathConstants.NODESET);
+                    NodeList times = (NodeList) xpath.compile(QUERY_FORECTAST_TIME).evaluate(xml, XPathConstants.NODESET);
+                    NodeList descriptions = (NodeList) xpath.compile(QUERY_FORECTAST_DESCRIPTION).evaluate(xml, XPathConstants.NODESET);
+                    NodeList temperatures = (NodeList) xpath.compile(QUERY_FORECTAST_TEMPERATURE).evaluate(xml, XPathConstants.NODESET);
                     WeatherState[] states = new WeatherState[times.getLength()];
                     for(int i = 0; i < states.length ; i++) {
                         WeatherState state = new WeatherState();

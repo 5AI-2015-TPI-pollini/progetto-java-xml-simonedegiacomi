@@ -1,5 +1,6 @@
 package MyWeather;
 
+import MyGMaps.Coordinate;
 import MyGMaps.InvalidPlace;
 import MyHTTP.DataRetrivedListener;
 import MyHTTP.JSONRetriver;
@@ -11,7 +12,7 @@ import org.json.JSONObject;
 public class JSONWeather extends Weather {
 
     @Override
-    public void getActualWeather(WeatherResultListener listener) throws InvalidPlace {
+    public void getActualWeather(Coordinate place, WeatherResultListener listener) throws InvalidPlace {
         JSONRetriver retriver = new JSONRetriver(OpenWeatherMapURLGenerator.generateURL(place, OpenWeatherMapURLGenerator.ACTUAL_WEATHER, OpenWeatherMapURLGenerator.JSON));
         retriver.retriveResult(new DataRetrivedListener() {
             @Override
@@ -33,7 +34,7 @@ public class JSONWeather extends Weather {
     }
 
     @Override
-    public void getForecast(WeatherResultListener listener) throws InvalidPlace {
+    public void getForecast(Coordinate place, WeatherResultListener listener) throws InvalidPlace {
         JSONRetriver retriver = new JSONRetriver(OpenWeatherMapURLGenerator.generateURL(place, OpenWeatherMapURLGenerator.ACTUAL_WEATHER, OpenWeatherMapURLGenerator.JSON));
         retriver.retriveResult(new DataRetrivedListener() {
             @Override

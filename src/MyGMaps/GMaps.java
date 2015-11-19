@@ -6,7 +6,7 @@ import weatherproject.Config;
  * Created by Simone on 15/11/2015.
  */
 public abstract class GMaps {
-    public static GMaps getGMaps() {
+    public static GMaps createGMaps() {
         switch(Config.getInstance().getDataType()) {
             case Config.XML:
                 return new XMLGMaps();

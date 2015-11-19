@@ -14,7 +14,6 @@ import javax.xml.xpath.XPathFactory;
 /**
  * This class is used to call the Google Maps Geocode API using XML
  * Created by Simone on 15/11/2015.
- *
  */
 public class XMLGMaps extends GMaps {
     /**

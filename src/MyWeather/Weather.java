@@ -9,23 +9,17 @@ import weatherproject.Config;
  */
 public abstract class Weather {
 
-    protected Coordinate place;
-
-    public static Weather getWeather(Coordinate place) {
+    public static Weather createWeather() {
         switch (Config.getInstance().getDataType()) {
             case Config.XML:
-                return new XMLWeather(place);
+                return new XMLWeather();
             case Config.JSON:
-                return new JSONWeather(place);
+                return new JSONWeather();
         }
         return null;
     }
 
-    public Weather (Coordinate place) {
-        this.place = place;
-    }
+    public abstract void getActualWeather (Coordinate place, WeatherResultListener listener) throws InvalidPlace;
 
-    public abstract void getActualWeather (WeatherResultListener listener) throws InvalidPlace;
-
-    public abstract void getForecast(WeatherResultListener listener) throws InvalidPlace;
+    public abstract void getForecast(Coordinate place, WeatherResultListener listener) throws InvalidPlace;
 }
