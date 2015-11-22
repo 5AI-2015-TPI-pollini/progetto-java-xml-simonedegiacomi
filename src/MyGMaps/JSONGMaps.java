@@ -9,11 +9,11 @@ import org.json.JSONObject;
  * Created by Simone on 16/11/2015.
  */
 public class JSONGMaps extends GMaps{
+    private JSONRetriver retriver = new JSONRetriver();
 
     @Override
     public void find(String place, ResultRetrivedListener listener) throws InvalidPlace {
-        JSONRetriver retriver = new JSONRetriver(GeocodeURLGenerator.generateURL(GeocodeURLGenerator.JSON, place));
-        retriver.retriveResult(new DataRetrivedListener() {
+        retriver.retriveResult(GeocodeURLGenerator.generateURL(GeocodeURLGenerator.JSON, place), new DataRetrivedListener() {
             @Override
             public void onResult(Object data) {
                 try {

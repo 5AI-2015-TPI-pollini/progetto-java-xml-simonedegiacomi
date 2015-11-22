@@ -8,6 +8,7 @@ public class WeatherState {
     private String description;
     private String icon;
     private String date;
+    private Double pressure, humidity;
 
     public String getDescription() {
         return description;
@@ -39,5 +40,21 @@ public class WeatherState {
 
     public String getIcon() {
         return icon;
+    }
+
+    public double getPressure() {
+        return pressure;
+    }
+
+    public double getHumidity() {
+        return humidity;
+    }
+
+    public void setPressure(Double pressure) {
+        this.pressure = pressure;
+    }
+
+    public void setHumidity(Double humidity) {
+        this.humidity = humidity;
     }
 }

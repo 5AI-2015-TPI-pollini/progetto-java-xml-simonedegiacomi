@@ -9,14 +9,8 @@ import java.net.URL;
  */
 public class ImageRetriver implements DataRetriver {
 
-    private URL url;
-
-    public ImageRetriver(URL url) {
-        this.url = url;
-    }
-
     @Override
-    public void retriveResult(DataRetrivedListener listener) {
+    public void retriveResult(URL url, DataRetrivedListener listener) {
         new Thread(new Runnable() {
             @Override
             public void run() {

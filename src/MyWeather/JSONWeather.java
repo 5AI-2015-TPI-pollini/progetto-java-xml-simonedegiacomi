@@ -10,11 +10,11 @@ import org.json.JSONObject;
  * Created by simone on 19/11/15.
  */
 public class JSONWeather extends Weather {
+    private JSONRetriver retriver = new JSONRetriver();
 
     @Override
     public void getActualWeather(Coordinate place, WeatherResultListener listener) throws InvalidPlace {
-        JSONRetriver retriver = new JSONRetriver(OpenWeatherMapURLGenerator.generateURL(place, OpenWeatherMapURLGenerator.ACTUAL_WEATHER, OpenWeatherMapURLGenerator.JSON));
-        retriver.retriveResult(new DataRetrivedListener() {
+        retriver.retriveResult(OpenWeatherMapURLGenerator.generateURL(place, OpenWeatherMapURLGenerator.ACTUAL_WEATHER, OpenWeatherMapURLGenerator.JSON), new DataRetrivedListener() {
             @Override
             public void onResult(Object data) {
                 try {
@@ -34,8 +34,7 @@ public class JSONWeather extends Weather {
 
     @Override
     public void getForecast(Coordinate place, WeatherResultListener listener) throws InvalidPlace {
-        JSONRetriver retriver = new JSONRetriver(OpenWeatherMapURLGenerator.generateURL(place, OpenWeatherMapURLGenerator.ACTUAL_WEATHER, OpenWeatherMapURLGenerator.JSON));
-        retriver.retriveResult(new DataRetrivedListener() {
+        retriver.retriveResult(OpenWeatherMapURLGenerator.generateURL(place, OpenWeatherMapURLGenerator.ACTUAL_WEATHER, OpenWeatherMapURLGenerator.JSON), new DataRetrivedListener() {
             @Override
             public void onResult(Object data) {
                 try {

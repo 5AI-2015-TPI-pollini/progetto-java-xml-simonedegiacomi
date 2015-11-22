@@ -1,9 +1,11 @@
 package MyHTTP;
 
+import java.net.URL;
+
 /**
  * Generic HTTP Data retriver
  * Created by Simone on 14/11/2015.
  */
 public interface DataRetriver {
-    public void retriveResult(DataRetrivedListener listener);
+    public void retriveResult(URL url, DataRetrivedListener listener);
 }

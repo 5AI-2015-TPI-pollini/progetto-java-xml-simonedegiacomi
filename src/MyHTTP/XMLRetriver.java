@@ -13,21 +13,14 @@ public class XMLRetriver implements DataRetriver {
      * DocumentBuilderFactory used to create the documentBuilder
      */
     private static final DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
-    /**
-     * URL of the xml to download
-     */
-    private URL url;
 
-    public XMLRetriver(URL url) {
-        this.url = url;
-    }
 
     /**
      * Download the XML
      * @param listener Listener to 'call' when thw XML is donwloaded and parsed
      */
     @Override
-    public void retriveResult(DataRetrivedListener listener) {
+    public void retriveResult(URL url, DataRetrivedListener listener) {
         // Create a new thread
         new Thread(new Runnable() {
             @Override

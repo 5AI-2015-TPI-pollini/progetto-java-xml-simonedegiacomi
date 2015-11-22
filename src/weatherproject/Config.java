@@ -1,9 +1,9 @@
 package weatherproject;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-
-import java.io.*;
-import java.util.HashMap;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.Serializable;
 import java.util.Properties;
 
 

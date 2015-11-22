@@ -7,7 +7,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 
 /**
  * Created by Simone on 15/11/2015.

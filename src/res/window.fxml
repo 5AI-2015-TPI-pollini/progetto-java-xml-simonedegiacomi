@@ -72,13 +72,13 @@
                   </Label>
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <ImageView fx:id="actualIcon" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="actualIcon" fitHeight="112.0" fitWidth="201.0" pickOnBounds="true" preserveRatio="true" />
                         <VBox>
                            <children>
                               <Label fx:id="actualState" text="State" />
                               <Label fx:id="actualTemperature" text="Temperature" />
-                              <Label fx:id="actualMax" text="Max" />
-                              <Label fx:id="actualMin" layoutX="10.0" layoutY="10.0" text="Min" />
+                              <Label fx:id="actualHumidity" text="Humidity" />
+                              <Label fx:id="actualPressure" layoutX="10.0" layoutY="10.0" text="Pressure" />
                            </children>
                         </VBox>
                      </children>
@@ -88,7 +88,7 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <TableView fx:id="forecastTable" prefHeight="281.0" prefWidth="398.0">
+                  <TableView fx:id="forecastTable" prefHeight="316.0" prefWidth="390.0">
                     <columns>
                       <TableColumn fx:id="foresastDateColumn" prefWidth="75.0" text="Date" />
                         <TableColumn fx:id="forecastDescriptionColumn" prefWidth="75.0" text="Description" />

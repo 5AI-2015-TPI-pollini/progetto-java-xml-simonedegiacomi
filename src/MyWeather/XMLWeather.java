@@ -8,7 +8,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.NodeList;
 
-import javax.lang.model.element.Name;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
@@ -22,15 +21,18 @@ public class XMLWeather extends Weather {
 
     private static final String QUERY_CURRENT_STATE = "/current/weather";
     private static final String QUERY_CURRENT_TEMP = "/current/temperature";
+    private static final String QUERY_CURRENT_HUMIDITY = "/current/humidity";
+    private static final String QUERY_CURRENT_PRESSURE = "/current/pressure";
 
     private static final String QUERY_FORECTAST_TIME = "/weatherdata/forecast/time";
     private static final String QUERY_FORECTAST_DESCRIPTION = "/weatherdata/forecast/time/symbol";
     private static final String QUERY_FORECTAST_TEMPERATURE = "/weatherdata/forecast/time/temperature";
 
+    private XMLRetriver retriver = new XMLRetriver();
+
     @Override
     public void getActualWeather(Coordinate place, WeatherResultListener listener) throws InvalidPlace {
-        XMLRetriver retriver = new XMLRetriver(OpenWeatherMapURLGenerator.generateURL(place, OpenWeatherMapURLGenerator.ACTUAL_WEATHER, OpenWeatherMapURLGenerator.XML));
-        retriver.retriveResult(new DataRetrivedListener() {
+        retriver.retriveResult(OpenWeatherMapURLGenerator.generateURL(place, OpenWeatherMapURLGenerator.ACTUAL_WEATHER, OpenWeatherMapURLGenerator.XML), new DataRetrivedListener() {
             @Override
             public void onResult(Object data) {
                 Document xml = (Document) data;
@@ -38,6 +40,8 @@ public class XMLWeather extends Weather {
                 try {
                     XPathExpression currentState = xpath.compile(QUERY_CURRENT_STATE);
                     XPathExpression temperature = xpath.compile(QUERY_CURRENT_TEMP);
+                    XPathExpression humidity = xpath.compile(QUERY_CURRENT_HUMIDITY);
+                    XPathExpression pressure = xpath.compile(QUERY_CURRENT_PRESSURE);
                     WeatherState states[] = new WeatherState[1];
                     WeatherState state = new WeatherState();
                     states[0] = state;
@@ -45,6 +49,12 @@ public class XMLWeather extends Weather {
                     NamedNodeMap weatherAttributes = ((NodeList) (currentState.evaluate(xml, XPathConstants.NODESET))).item(0).getAttributes();
                     state.setDescription(weatherAttributes.getNamedItem("value").getNodeValue());
                     state.setIcon(weatherAttributes.getNamedItem("icon").getNodeValue());
+                    // Get the humidity
+                    NamedNodeMap humidityAttributes = ((NodeList) (humidity.evaluate(xml, XPathConstants.NODESET))).item(0).getAttributes();
+                    state.setHumidity(Double.parseDouble(humidityAttributes.getNamedItem("value").getNodeValue()));
+                    // Get the pressure
+                    NamedNodeMap pressureAttributes = ((NodeList) (pressure.evaluate(xml, XPathConstants.NODESET))).item(0).getAttributes();
+                    state.setPressure(Double.parseDouble(humidityAttributes.getNamedItem("value").getNodeValue()));
                     // Get the temperature
                     NamedNodeMap temperatureAttributes = ((NodeList)(temperature.evaluate(xml, XPathConstants.NODESET))).item(0).getAttributes();
                     state.setTemperature(Double.parseDouble(temperatureAttributes.getNamedItem("value").getNodeValue()));
@@ -59,8 +69,7 @@ public class XMLWeather extends Weather {
 
     @Override
     public void getForecast(Coordinate place, WeatherResultListener listener) throws InvalidPlace {
-        XMLRetriver retriver = new XMLRetriver(OpenWeatherMapURLGenerator.generateURL(place, OpenWeatherMapURLGenerator.FORECAST, OpenWeatherMapURLGenerator.XML));
-        retriver.retriveResult(new DataRetrivedListener() {
+        retriver.retriveResult(OpenWeatherMapURLGenerator.generateURL(place, OpenWeatherMapURLGenerator.FORECAST, OpenWeatherMapURLGenerator.XML), new DataRetrivedListener() {
             @Override
             public void onResult(Object data) {
                 Document xml = (Document) data;

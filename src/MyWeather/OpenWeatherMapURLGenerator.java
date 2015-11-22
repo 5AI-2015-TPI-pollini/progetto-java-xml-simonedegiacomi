@@ -26,7 +26,7 @@ public class OpenWeatherMapURLGenerator {
     public static URL generateURL (Coordinate coordinate, int request, int resultType) throws InvalidPlace {
         StringBuilder urlString = new StringBuilder(openWeatherUrl);
         urlString.append(forecastType[request]);
-        urlString.append("?mode=");
+        urlString.append("?units=metric&mode=");
         urlString.append(resultTypes[resultType]);
         urlString.append("&lat=");
         urlString.append(coordinate.getLatitude());

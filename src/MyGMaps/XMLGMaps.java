@@ -1,6 +1,7 @@
 package MyGMaps;
 
 import MyHTTP.DataRetrivedListener;
+import MyHTTP.DataRetriver;
 import MyHTTP.XMLRetriver;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
@@ -27,13 +28,13 @@ public class XMLGMaps extends GMaps {
      */
     private static final XPathFactory xpathFactory = XPathFactory.newInstance();
 
+    private XMLRetriver retriver = new XMLRetriver();
+
     public XMLGMaps() {}
 
     @Override
     public void find(String place, ResultRetrivedListener listener) throws InvalidPlace {
-        XMLRetriver retriver = new XMLRetriver(GeocodeURLGenerator.generateURL(GeocodeURLGenerator.XML, place));
-        // Retrive the XML
-        retriver.retriveResult(new DataRetrivedListener() {
+        retriver.retriveResult(GeocodeURLGenerator.generateURL(GeocodeURLGenerator.XML, place), new DataRetrivedListener() {
             @Override
             public void onResult(Object data) {
                 Document xml = (Document) data;

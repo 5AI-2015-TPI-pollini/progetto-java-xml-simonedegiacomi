@@ -12,14 +12,8 @@ import java.net.URLConnection;
  */
 public class JSONRetriver implements DataRetriver {
 
-    private URL url;
-
-    public JSONRetriver(URL url) {
-        this.url = url;
-    }
-
     @Override
-    public void retriveResult(DataRetrivedListener listener) {
+    public void retriveResult(URL url, DataRetrivedListener listener) {
         new Thread(new Runnable() {
             @Override
             public void run() {
