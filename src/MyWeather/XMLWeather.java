@@ -72,6 +72,8 @@ public class XMLWeather extends Weather {
                     WeatherState[] states = new WeatherState[times.getLength()];
                     for(int i = 0; i < states.length ; i++) {
                         WeatherState state = new WeatherState();
+                        // Get the time
+                        state.setDate(times.item(i).getAttributes().getNamedItem("from").getNodeValue());
                         // Get the description
                         NamedNodeMap weatherAttributes = descriptions.item(i).getAttributes();
                         state.setDescription(weatherAttributes.getNamedItem("name").getNodeValue());

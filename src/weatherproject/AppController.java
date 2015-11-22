@@ -8,6 +8,8 @@ import MyWeather.Weather;
 import MyWeather.WeatherResultListener;
 import MyWeather.WeatherState;
 import javafx.application.Platform;
+import javafx.beans.InvalidationListener;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -59,7 +61,7 @@ public class AppController implements Initializable {
     private TableView forecastTable;
 
     @FXML
-    private TableColumn forecastDescriptionColumn, foresastDateColumn, forecastTemperatureColumn;
+    private TableColumn forecastDescriptionColumn, foresastDateColumn, forecastTemperatureColumn, forecastIconColumn;
 
 
     @FXML
@@ -111,6 +113,26 @@ public class AppController implements Initializable {
                 return new SimpleStringProperty(p.getValue().getTemperature() + " °C");
             }
         });
+
+        final ImageView[] tempImage = new ImageView[1];
+        try {
+            new ImageRetriver(new URL("http://openweathermap.org/img/w/10d.png")).retriveResult(new DataRetrivedListener() {
+                @Override
+                public void onResult(Object data) {
+                    tempImage[0] = (ImageView) data;
+                    System.out.println("Retrived");
+                }
+            });
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+
+//        forecastIconColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<WeatherState, ImageView>, ObservableValue<ImageView>>() {
+          //  public ObservableValue<ImageView> call(TableColumn.CellDataFeatures<WeatherState, ImageView> p) {
+
+        //    }
+        //});
 
         // Initialize the address list handler
         addressesList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
