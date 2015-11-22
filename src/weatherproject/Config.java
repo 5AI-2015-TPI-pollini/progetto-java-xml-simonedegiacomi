@@ -1,7 +1,11 @@
 package weatherproject;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import java.io.*;
 import java.util.HashMap;
+import java.util.Properties;
+
 
 /**
  * Created by Simone on 18/11/2015.
@@ -12,51 +16,43 @@ public class Config implements Serializable {
     public static final int XML = 0;
     public static final int JSON = 1;
 
-    private static Config ourInstance;
+    private static Config ourInstance = new Config();
 
     public static Config getInstance() {
-        if (ourInstance == null)
-            ourInstance = new Config();
         return ourInstance;
     }
 
-    private int dataType;
-    private HashMap<String, Object> params;
+    private Properties properties;
 
     private Config() {
-        dataType = XML;
-        strings = new HashMap<>();
+        properties = new Properties();
     }
 
-    public static void loadConfig (InputStream in) throws IOException, ClassNotFoundException {
-        ObjectInputStream stream = new ObjectInputStream(in);
-        ourInstance = (Config) stream.readObject();
-        stream.close();
+    public void loadConfig (InputStream in) throws IOException, ClassNotFoundException {
+        properties.loadFromXML(in);
     }
 
     public void saveConfig (OutputStream out) throws IOException {
-        ObjectOutputStream stream = new ObjectOutputStream(out);
-        stream.writeObject(ourInstance);
-        stream.close();
+        properties.storeToXML(out, "Configuration");
     }
 
     public int getDataType () {
-        return dataType;
+        return Integer.parseInt(properties.getProperty("dataType"));
     }
 
     public void setDataType (int newDataType) {
-        this.dataType = newDataType;
+        properties.put("dataType", "" + newDataType);
     }
 
     public String getString (String key) {
-        return params.get(key);
+        return properties.getProperty(key);
     }
 
     public void setString (String key, String value) {
-        params.put(key, value);
+        properties.put(key, value);
     }
 
-    public boolean getBoolean (String key) { return params.get(key); }
+    public boolean getBoolean (String key) { return Boolean.parseBoolean((String) properties.get(key)); }
 
-    public void setBoolean (String key, boolean value) { params.put(key, value); }
+    public void setBoolean (String key, boolean value) { properties.put(key, "" + value); }
 }

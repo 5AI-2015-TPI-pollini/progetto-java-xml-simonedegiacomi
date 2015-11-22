@@ -23,8 +23,7 @@ public class JSONWeather extends Weather {
                     JSONObject jsonMain = json.getJSONObject("main");
                     WeatherState state = new WeatherState();
                     state.setDescription(jsonWeather.getString("description"));
-                    Temperature temp = new Temperature(jsonMain.getDouble("temp"), jsonMain.getDouble("temp_min"), jsonMain.getDouble("temp_max"));
-                    state.setTemperature(temp);
+                    state.setTemperature(jsonMain.getDouble("temp"));
                     listener.onResult(new WeatherState[]{state});
                 } catch (Exception ex) {
                     listener.onResult(null);

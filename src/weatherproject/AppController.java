@@ -1,29 +1,36 @@
 package weatherproject;
 
-import MyGMaps.Address;
-import MyGMaps.GMaps;
-import MyGMaps.InvalidPlace;
-import MyGMaps.ResultRetrivedListener;
+import MyGMaps.*;
+import MyHTTP.DataRetrivedListener;
+import MyHTTP.ImageRetriver;
+import MyWeather.OpenWeatherMapURLGenerator;
 import MyWeather.Weather;
 import MyWeather.WeatherResultListener;
 import MyWeather.WeatherState;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableArray;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import java.io.FileOutputStream;
+import java.lang.reflect.Array;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 /**
@@ -40,8 +47,20 @@ public class AppController implements Initializable {
     private TextField inputAddress;
     @FXML
     private ListView addressesList;
+
+
     @FXML
-    private ImageView mainIcon;
+    private Label actualState, actualTemperature;
+
+    @FXML
+    private ImageView actualIcon;
+
+    @FXML
+    private TableView forecastTable;
+
+    @FXML
+    private TableColumn forecastDescriptionColumn, foresastDateColumn, forecastTemperatureColumn;
+
 
     @FXML
     private void inputHandler() {
@@ -76,27 +95,81 @@ public class AppController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         gmaps = GMaps.createGMaps();
         weather = Weather.createWeather();
-        addressesList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
-            @Override
-            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                selectedAddress = retrivedAddesses[addressesList.getSelectionModel().getSelectedIndex()];
-                // Get weather informations
-                try {
-                    weather.getActualWeather(selectedAddress.getCoordinate(), new WeatherResultListener() {
-                        @Override
-                        public void onResult(WeatherState[] states) {
-                            showActualWeather(states[0]);
-                        }
-                    });
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
+        //Initialize the table
+        forecastDescriptionColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<WeatherState, String>, ObservableValue<String>>() {
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<WeatherState, String> p) {
+                return new SimpleStringProperty(p.getValue().getDescription());
             }
         });
+        foresastDateColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<WeatherState, String>, ObservableValue<String>>() {
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<WeatherState, String> p) {
+                return new SimpleStringProperty(p.getValue().getDate());
+            }
+        });
+        forecastTemperatureColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<WeatherState, String>, ObservableValue<String>>() {
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<WeatherState, String> p) {
+                return new SimpleStringProperty(p.getValue().getTemperature() + " °C");
+            }
+        });
+
+        // Initialize the address list handler
+        addressesList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed (ObservableValue observable, Object oldValue, Object newValue){
+            selectedAddress = retrivedAddesses[addressesList.getSelectionModel().getSelectedIndex()];
+            // Get weather informations
+            try {
+                weather.getActualWeather(selectedAddress.getCoordinate(), new WeatherResultListener() {
+                    @Override
+                    public void onResult(WeatherState[] states) {
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                showActualWeather(states[0]);
+                            }
+                        });
+                    }
+                });
+                weather.getForecast(selectedAddress.getCoordinate(), new WeatherResultListener() {
+                    @Override
+                    public void onResult(WeatherState[] states) {
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                // Update the table
+                                forecastTable.setItems(FXCollections.observableArrayList(states));
+                            }
+                        });
+                    }
+                });
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 
-    private void showActualWeather(WeatherState state) {
+    );
+}
 
+    private void showActualWeather(WeatherState state) {
+        actualState.setText("State: " + state.getDescription());
+        actualTemperature.setText("Temperature: " + state.getTemperature() + " °C");
+        try {
+            ImageRetriver retriver = new ImageRetriver(OpenWeatherMapURLGenerator.generateIconURL(state.getIcon()));
+            retriver.retriveResult(new DataRetrivedListener() {
+                @Override
+                public void onResult(Object data) {
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            actualIcon.setImage((Image) data);
+                        }
+                    });
+                }
+            });
+        } catch (Exception ex) {
+
+        }
     }
 
     @FXML

@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 
 /**
  * Created by Simone on 15/11/2015.
@@ -20,9 +21,9 @@ public class WeatherProject extends Application {
 
     private static void loadConfig () {
         try {
-            Config.loadConfig(new FileInputStream(Config.DEFAULT_CONFIG_FILE));
+            Config.getInstance().loadConfig(new FileInputStream(Config.DEFAULT_CONFIG_FILE));
         } catch (Exception ex) {
-            Config.getInstance().setString("API_KEY", "");
+            ex.printStackTrace();
         }
     }
 
@@ -33,6 +34,4 @@ public class WeatherProject extends Application {
         primaryStage.setScene(new Scene(root, 700, 300));
         primaryStage.show();
     }
-
-
 }
