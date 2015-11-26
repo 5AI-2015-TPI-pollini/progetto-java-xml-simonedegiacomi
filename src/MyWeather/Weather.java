@@ -5,6 +5,7 @@ import MyGMaps.InvalidPlace;
 import weatherproject.Config;
 
 /**
+ * Abstract class of weather api wrapper
  * Created by Simone on 15/11/2015.
  */
 public abstract class Weather {
@@ -19,7 +20,19 @@ public abstract class Weather {
         return null;
     }
 
+    /**
+     * Retrive the actual weather data
+     * @param place Coordinate of the place
+     * @param listener Listener of the data
+     * @throws InvalidPlace Exception throwed in case of invalid coordinate
+     */
     public abstract void getActualWeather (Coordinate place, WeatherResultListener listener) throws InvalidPlace;
 
+    /**
+     * Retrive the weatherforecast
+     * @param place Coordinate of the place
+     * @param listener Listener of the data
+     * @throws InvalidPlace Exception throwed in case of invalid coordinate
+     */
     public abstract void getForecast(Coordinate place, WeatherResultListener listener) throws InvalidPlace;
 }

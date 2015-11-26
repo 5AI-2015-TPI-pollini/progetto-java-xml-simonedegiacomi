@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Properties;
 
 
@@ -15,6 +16,8 @@ public class Config implements Serializable {
 
     public static final int XML = 0;
     public static final int JSON = 1;
+
+    private ArrayList<Runnable> callbacks = new ArrayList<>();
 
     private static Config ourInstance = new Config();
 
@@ -34,6 +37,8 @@ public class Config implements Serializable {
 
     public void saveConfig (OutputStream out) throws IOException {
         properties.storeToXML(out, "Configuration");
+        for(Runnable callback : callbacks)
+            callback.run();
     }
 
     public int getDataType () {
@@ -55,4 +60,8 @@ public class Config implements Serializable {
     public boolean getBoolean (String key) { return Boolean.parseBoolean((String) properties.get(key)); }
 
     public void setBoolean (String key, boolean value) { properties.put(key, "" + value); }
+
+    public void addChangeCallback(Runnable callback) {
+        callbacks.add(callback);
+    }
 }

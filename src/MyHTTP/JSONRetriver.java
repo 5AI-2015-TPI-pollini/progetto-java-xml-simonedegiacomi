@@ -18,12 +18,15 @@ public class JSONRetriver implements DataRetriver {
             @Override
             public void run() {
                 try {
-                    URLConnection conn = url.openConnection();
+                    URLConnection conn = url.openConnection(); // Open the connection
+                    // Create a streamReader
                     BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                     StringBuilder jsonString = new StringBuilder();
                     String temp;
+                    // Read all the data
                     while ((temp = in.readLine()) != null)
                         jsonString.append(temp);
+                    // Return the parsed xml
                     listener.onResult(new JSONObject(jsonString.toString()));
                 } catch (Exception ex) {
                     listener.onResult(null);

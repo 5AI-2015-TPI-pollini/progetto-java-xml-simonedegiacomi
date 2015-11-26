@@ -30,13 +30,12 @@ public class XMLGMaps extends GMaps {
 
     private XMLRetriver retriver = new XMLRetriver();
 
-    public XMLGMaps() {}
-
     @Override
     public void find(String place, ResultRetrivedListener listener) throws InvalidPlace {
         retriver.retriveResult(GeocodeURLGenerator.generateURL(GeocodeURLGenerator.XML, place), new DataRetrivedListener() {
             @Override
             public void onResult(Object data) {
+                // Cast the data to xml
                 Document xml = (Document) data;
                 // Create xpath
                 XPath xpath = xpathFactory.newXPath();

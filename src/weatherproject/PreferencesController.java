@@ -1,5 +1,7 @@
 package weatherproject;
 
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -15,21 +17,17 @@ import java.util.ResourceBundle;
  */
 public class PreferencesController implements Initializable {
     @FXML
-    private CheckBox useProxy;
+    private CheckBox useProxy, authenticateProxy;
     @FXML
-    private TextField proxyIP;
-    @FXML
-    private TextField proxyPort;
-    @FXML
-    private CheckBox authenticateProxy;
-    @FXML
-    private TextField proxyUser;
+    private TextField proxyIP, proxyPort, proxyUser;
     @FXML
     private PasswordField proxyPassword;
     @FXML
     private TitledPane authenticationProxyPane;
     @FXML
     private Button save;
+    @FXML
+    private ChoiceBox dataType;
 
     private Config config;
     private Stage dialogStage;
@@ -41,6 +39,15 @@ public class PreferencesController implements Initializable {
         proxyPort.editableProperty().bind(useProxy.selectedProperty());
         authenticationProxyPane.expandedProperty().bind(authenticateProxy.selectedProperty());
         config = Config.getInstance();
+        // Show the actuasl config
+        useProxy.setSelected(config.getBoolean("useProxy"));
+        proxyIP.setText(config.getString("proxyIP"));
+        proxyPort.setText(config.getString("proxyPort"));
+        authenticateProxy.setSelected(config.getBoolean("authenticateProxy"));
+        proxyUser.setText(config.getString("proxyUser"));
+        proxyPassword.setText(config.getString("proxyPassword"));
+        dataType.setItems(FXCollections.observableArrayList(new String[]{"xml", "json"}));
+        dataType.getSelectionModel().select(0);
     }
 
     public void setDialogStage(Stage dialogStage) {
@@ -49,21 +56,14 @@ public class PreferencesController implements Initializable {
 
     private void applyChanges() {
         config.setBoolean("useProxy", useProxy.isSelected());
-        config.setString("proxyIp", proxyIP.getText());
+        config.setString("proxyIP", proxyIP.getText());
+        config.setString("proxyPort", proxyPort.getText());
         config.setString("proxyPassword", proxyPassword.getText());
-        config.setBoolean("authenticationProxy", authenticateProxy.isSelected());
+        config.setBoolean("authenticateProxy", authenticateProxy.isSelected());
         config.setString("proxyUser", proxyUser.getText());
         config.setString("proxyPassword", proxyPassword.getText());
-        config.setDataType(Config.XML);
+        config.setDataType(dataType.getSelectionModel().getSelectedIndex());
         EasyProxy.setProxyByConfig();
-    }
-
-    private void showErrorAlert() {
-        Alert error = new Alert(Alert.AlertType.ERROR);
-        error.setTitle("Connection Error");
-        error.setContentText("Check the new proxy configuration");
-        error.showAndWait();
-        dialogStage.show();
     }
 
     @FXML
@@ -73,9 +73,7 @@ public class PreferencesController implements Initializable {
         // Change the configuration
         try {
             applyChanges();
-        } catch (Exception ex) {
-            showErrorAlert();
-        }
+        } catch (Exception ex) {}
         // Save the configuration
         new Thread(new Runnable() {
             @Override
@@ -83,17 +81,10 @@ public class PreferencesController implements Initializable {
                 try {
                     // Save the file
                     config.saveConfig(new FileOutputStream(Config.DEFAULT_CONFIG_FILE));
-                    // And make a test connession
-                    try {
-                        URLConnection c = new URL("http://www.google.it/").openConnection();
-                    } catch (Exception ex){
-                        showErrorAlert();
-                    }
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
             }
         }).start();
-
     }
 }

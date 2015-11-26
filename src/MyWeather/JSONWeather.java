@@ -7,9 +7,13 @@ import MyHTTP.JSONRetriver;
 import org.json.JSONObject;
 
 /**
+ * API wrapper for OpenWeatherMap
  * Created by simone on 19/11/15.
  */
 public class JSONWeather extends Weather {
+    /**
+     * JSON retrived used to download the json data
+     */
     private JSONRetriver retriver = new JSONRetriver();
 
     @Override

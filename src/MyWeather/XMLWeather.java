@@ -3,6 +3,7 @@ package MyWeather;
 import MyGMaps.Coordinate;
 import MyGMaps.InvalidPlace;
 import MyHTTP.DataRetrivedListener;
+import MyHTTP.DataRetriver;
 import MyHTTP.XMLRetriver;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
@@ -28,7 +29,7 @@ public class XMLWeather extends Weather {
     private static final String QUERY_FORECTAST_DESCRIPTION = "/weatherdata/forecast/time/symbol";
     private static final String QUERY_FORECTAST_TEMPERATURE = "/weatherdata/forecast/time/temperature";
 
-    private XMLRetriver retriver = new XMLRetriver();
+    private DataRetriver retriver = new XMLRetriver();
 
     @Override
     public void getActualWeather(Coordinate place, WeatherResultListener listener) throws InvalidPlace {
@@ -82,7 +83,7 @@ public class XMLWeather extends Weather {
                     for(int i = 0; i < states.length ; i++) {
                         WeatherState state = new WeatherState();
                         // Get the time
-                        state.setDate(times.item(i).getAttributes().getNamedItem("from").getNodeValue());
+                        state.setDate(times.item(i).getAttributes().getNamedItem("from").getNodeValue().replaceAll("T", " "));
                         // Get the description
                         NamedNodeMap weatherAttributes = descriptions.item(i).getAttributes();
                         state.setDescription(weatherAttributes.getNamedItem("name").getNodeValue());

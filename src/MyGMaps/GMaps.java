@@ -3,9 +3,14 @@ package MyGMaps;
 import weatherproject.Config;
 
 /**
+ * Abstact class of GMaps API Wrapper
  * Created by Simone on 15/11/2015.
  */
 public abstract class GMaps {
+    /**
+     * Create a new GMaps, selecting the type reading the configuration
+     * @return
+     */
     public static GMaps createGMaps() {
         switch(Config.getInstance().getDataType()) {
             case Config.XML:

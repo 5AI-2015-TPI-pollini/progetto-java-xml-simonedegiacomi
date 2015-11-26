@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+
 <AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="weatherproject.PreferencesController">
    <children>
       <VBox layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="8.0">
@@ -133,7 +135,7 @@
                                  <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                               </padding>
                            </Label>
-                           <ChoiceBox prefWidth="150.0" />
+                           <ChoiceBox fx:id="dataType" prefWidth="150.0" />
                         </children>
                      </HBox>
                </content>
@@ -141,10 +143,16 @@
                   <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                </VBox.margin>
             </TitledPane>
-            <Pane prefHeight="60.0" prefWidth="260.0">
+            <Pane prefHeight="35.0" prefWidth="262.0">
                <children>
                   <Button fx:id="save" layoutX="194.0" layoutY="2.0" mnemonicParsing="false" onAction="#saveAndClose" text="Save" />
                </children>
+               <padding>
+                  <Insets bottom="8.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets bottom="8.0" />
+               </VBox.margin>
             </Pane>
          </children>
          <opaqueInsets>

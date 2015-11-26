@@ -11,7 +11,11 @@ public class EasyProxy {
         Config config = Config.getInstance();
         if(!config.getBoolean("useProxy"))
             return ;
-        if(config.getBoolean("authenticateProxy")) {
+        else
+            System.setProperty("proxySet", "true");
+        System.setProperty("http.proxyHost", config.getString("proxyIP"));
+        System.setProperty("http.proxyPort", config.getString("proxyPort"));
+        if(config.getBoolean("authenticateProxy"))
             Authenticator.setDefault(
                     new Authenticator() {
                         @Override
@@ -20,10 +24,5 @@ public class EasyProxy {
                         }
                     }
             );
-            System.setProperty("http.proxyUser", config.getString("proxyUser"));
-            System.setProperty("http.proxyPassword", config.getString("proxyPassword"));
-        }
-        System.setProperty("http.proxyHost", config.getString("proxyIP"));
-        System.setProperty("http.proxyPort", config.getString("proxyPort"));
     }
 }
