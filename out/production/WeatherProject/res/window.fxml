@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<VBox prefHeight="525.0" prefWidth="662.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="weatherproject.AppController">
+   <children>
+      <MenuBar>
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+                  <MenuItem mnemonicParsing="false" onAction="#showPreferences" text="Preferences" />
+              <MenuItem mnemonicParsing="false" onAction="#close" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#showAbout" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <BorderPane>
+         <left>
+            <VBox>
+               <children>
+                  <Label text="Search" textFill="#9f9f9f">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </padding>
+                  </Label>
+                  <TextField fx:id="inputAddress" onKeyTyped="#inputHandler" promptText="Insert a place...">
+                     <VBox.margin>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <ListView fx:id="addressesList" prefHeight="412.0" prefWidth="248.0">
+                     <VBox.margin>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </VBox.margin>
+                     <effect>
+                        <Blend />
+                     </effect>
+                  </ListView>
+               </children>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
+            </VBox>
+         </left>
+         <center>
+            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label text="Weather" textFill="#9f9f9f">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </padding>
+                  </Label>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fx:id="actualIcon" fitHeight="112.0" fitWidth="201.0" pickOnBounds="true" preserveRatio="true" />
+                        <VBox>
+                           <children>
+                              <Label fx:id="actualState" text="State" />
+                              <Label fx:id="actualTemperature" text="Temperature" />
+                              <Label fx:id="actualHumidity" text="Humidity" />
+                              <Label fx:id="actualPressure" layoutX="10.0" layoutY="10.0" text="Pressure" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <Label text="Forecast" textFill="#9f9f9f">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <TableView fx:id="forecastTable" prefHeight="316.0" prefWidth="390.0">
+                    <columns>
+                        <TableColumn fx:id="forecastIconColumn" prefWidth="75.0" text="Icon" />
+                      <TableColumn fx:id="foresastDateColumn" prefWidth="75.0" text="Date" />
+                        <TableColumn fx:id="forecastDescriptionColumn" prefWidth="113.0" text="Description" />
+                        <TableColumn fx:id="forecastTemperatureColumn" prefWidth="124.0" text="Temperature" />
+                    </columns>
+                     <VBox.margin>
+                        <Insets bottom="8.0" right="8.0" top="8.0" />
+                     </VBox.margin>
+                  </TableView>
+               </children>
+            </VBox>
+         </center>
+      </BorderPane>
+      <HBox>
+         <children>
+            <Label fx:id="connectionStatus" text="Connection" />
+         </children>
+         <VBox.margin>
+            <Insets bottom="4.0" left="4.0" />
+         </VBox.margin>
+      </HBox>
+   </children>
+</VBox>
