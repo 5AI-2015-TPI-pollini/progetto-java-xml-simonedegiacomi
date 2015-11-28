@@ -1,6 +1,5 @@
 package weatherproject;
 
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -9,7 +8,6 @@ import javafx.stage.Stage;
 
 import java.io.FileOutputStream;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.ResourceBundle;
 
 /**

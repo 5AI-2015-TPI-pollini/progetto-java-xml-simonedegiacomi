@@ -43,9 +43,7 @@ public class XMLWeather extends Weather {
                     XPathExpression temperature = xpath.compile(QUERY_CURRENT_TEMP);
                     XPathExpression humidity = xpath.compile(QUERY_CURRENT_HUMIDITY);
                     XPathExpression pressure = xpath.compile(QUERY_CURRENT_PRESSURE);
-                    WeatherState states[] = new WeatherState[1];
                     WeatherState state = new WeatherState();
-                    states[0] = state;
                     // Get the weather state
                     NamedNodeMap weatherAttributes = ((NodeList) (currentState.evaluate(xml, XPathConstants.NODESET))).item(0).getAttributes();
                     state.setDescription(weatherAttributes.getNamedItem("value").getNodeValue());
@@ -59,7 +57,7 @@ public class XMLWeather extends Weather {
                     // Get the temperature
                     NamedNodeMap temperatureAttributes = ((NodeList)(temperature.evaluate(xml, XPathConstants.NODESET))).item(0).getAttributes();
                     state.setTemperature(Double.parseDouble(temperatureAttributes.getNamedItem("value").getNodeValue()));
-                    listener.onResult(states);
+                    listener.onResult(new WeatherState[]{state});
                 } catch (Exception ex) {
                     ex.printStackTrace();
                     listener.onResult(null);

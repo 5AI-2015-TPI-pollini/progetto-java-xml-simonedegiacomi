@@ -1,7 +1,6 @@
 package MyGMaps;
 
 import MyHTTP.DataRetrivedListener;
-import MyHTTP.DataRetriver;
 import MyHTTP.XMLRetriver;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;

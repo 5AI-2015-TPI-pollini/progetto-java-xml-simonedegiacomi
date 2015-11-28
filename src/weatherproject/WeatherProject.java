@@ -9,15 +9,18 @@ import javafx.stage.Stage;
 import java.io.FileInputStream;
 
 /**
- * Created by Simone on 15/11/2015.
+ * Main Class
+ * Created by Degiacomi Simone on 15/11/2015.
  */
 public class WeatherProject extends Application {
 
     public static void main (String[] args) {
-        loadConfig();
-        launch(args);
+        loadConfig(); // Load the configuaration
+        launch(args); // Lanch the GUI App
     }
-
+    /**
+     * Load the file configuration
+    **/
     private static void loadConfig () {
         try {
             Config.getInstance().loadConfig(new FileInputStream(Config.DEFAULT_CONFIG_FILE));
@@ -25,7 +28,7 @@ public class WeatherProject extends Application {
             ex.printStackTrace();
         }
     }
-
+    
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("../res/window.fxml"));
