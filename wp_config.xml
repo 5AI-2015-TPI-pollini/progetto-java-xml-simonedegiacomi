@@ -4,7 +4,7 @@
 <comment>Configuration</comment>
 <entry key="proxyIP">192.168.0.1</entry>
 <entry key="proxyUser">proxyUser</entry>
-<entry key="apiKey">2de143494c0b295cca9337e1e96b00e0</entry>
+<entry key="apiKey">apiKey</entry>
 <entry key="useProxy">false</entry>
 <entry key="proxyPassword">proxyPassword</entry>
 <entry key="proxyIp">192.168.0.1</entry>
