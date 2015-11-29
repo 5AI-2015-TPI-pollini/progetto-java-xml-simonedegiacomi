@@ -116,6 +116,20 @@ public class AppController implements Initializable {
 
 
     private void applyConfig() {
+        // Check if the API key is setted
+        if(Config.getInstance().getString("apiKey") == null) {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Invalid config");
+                    alert.setAlertType(Alert.AlertType.ERROR);
+                    alert.setHeaderText("The configuration is invalid!");
+                    alert.setContentText("The configuration doesn't contain the apikey!");
+                    alert.show();
+                }
+            });
+        }
         gmaps = GMaps.createGMaps(); // Instanciate a new Google GeoCode API Wrapper
         weather = Weather.createWeather(); // Instanciate a new OpenWeatherMap API Wrapper
         EasyProxy.setProxyByConfig(); // Set the proxy
@@ -238,33 +252,33 @@ public class AppController implements Initializable {
      * @param state Actual weather state
      */
     private void showActualWeather(WeatherState state) {
-    Platform.runLater(new Runnable() {
-        @Override
-        public void run() {
-            actualState.setText("State: " + state.getDescription());
-            actualTemperature.setText("Temperature: " + state.getTemperature() + " °C");
-            actualHumidity.setText("Humidity: " + state.getHumidity() + " %");
-            actualPressure.setText("Pressure: " + state.getPressure() + " hPa");
-            final String icon = state.getIcon();
-            if(images.containsKey(state.getIcon()))
-                actualIcon.setImage(images.get(icon));
-            else
-                try {
-                    imagesRetriver.retriveResult(OpenWeatherMapURLGenerator.generateIconURL(state.getIcon()), new DataRetrivedListener() {
-                        @Override
-                        public void onResult(Object data) {
-                            Platform.runLater(new Runnable() {
-                                @Override
-                                public void run() {
-                                    images.put(icon, (Image) data);
-                                    actualIcon.setImage((Image) data);
-                                }
-                            });
-                        }
-                    });
-                } catch (Exception ex) {}
-        }
-    });
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                actualState.setText("State: " + state.getDescription());
+                actualTemperature.setText("Temperature: " + state.getTemperature() + " °C");
+                actualHumidity.setText("Humidity: " + state.getHumidity() + " %");
+                actualPressure.setText("Pressure: " + state.getPressure() + " hPa");
+                final String icon = state.getIcon();
+                if(images.containsKey(state.getIcon()))
+                    actualIcon.setImage(images.get(icon));
+                else
+                    try {
+                        imagesRetriver.retriveResult(OpenWeatherMapURLGenerator.generateIconURL(state.getIcon()), new DataRetrivedListener() {
+                            @Override
+                            public void onResult(Object data) {
+                                Platform.runLater(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        images.put(icon, (Image) data);
+                                        actualIcon.setImage((Image) data);
+                                    }
+                                });
+                            }
+                        });
+                    } catch (Exception ex) {}
+            }
+        });
 }
 
 private void showForecast(final WeatherState states[]) {
@@ -311,7 +325,7 @@ private void showAbout() {
 @FXML
 private void showPreferences() {
     try {
-        FXMLLoader loader = new FXMLLoader(WeatherProject.class.getResource("../res/preferences.fxml"));
+        FXMLLoader loader = new FXMLLoader(AppController.class.getClassLoader().getResource("res/preferences.fxml"));
         AnchorPane page = (AnchorPane) loader.load();
         Stage dialogStage = new Stage();
         dialogStage.setTitle("Preferences");

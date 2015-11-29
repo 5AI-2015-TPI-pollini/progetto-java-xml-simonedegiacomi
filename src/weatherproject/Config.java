@@ -47,6 +47,7 @@ public class Config implements Serializable {
     
     private Config() {
         properties = new Properties();
+        properties.setProperty("dataType", "0");
     }
 
     public void loadConfig (InputStream in) throws IOException, ClassNotFoundException {
