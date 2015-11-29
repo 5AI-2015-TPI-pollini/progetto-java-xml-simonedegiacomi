@@ -1,7 +1,8 @@
 package MyGMaps;
 
 /**
- * Created by Simone on 15/11/2015.
+ * Listener to implement, used as callback for the retrived result
+ * Created by Degiacomi Simone on 15/11/2015.
  */
 public interface ResultRetrivedListener {
     /**

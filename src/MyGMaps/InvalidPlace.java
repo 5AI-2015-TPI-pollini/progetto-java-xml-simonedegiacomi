@@ -1,7 +1,9 @@
 package MyGMaps;
 
 /**
- * Created by Simone on 15/11/2015.
+ * Exception throwed when a address is not valid, for exapme contains
+ * invalid characters
+ * Created by Degiacomi Simone on 15/11/2015.
  */
 public class InvalidPlace extends Exception {
 

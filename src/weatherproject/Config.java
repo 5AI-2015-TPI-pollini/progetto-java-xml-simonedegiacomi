@@ -17,7 +17,7 @@ public class Config implements Serializable {
     /**
      * Default configuration hidden file name
     **/
-    public static final String DEFAULT_CONFIG_FILE = ".wpconfig";
+    public static final String DEFAULT_CONFIG_FILE = "wp_config.xml";
     /**
      * Flag used to indicate the type of the data used
      * for the response
@@ -82,7 +82,7 @@ public class Config implements Serializable {
     /**
      * Add a callback that will executed when the configuration
      * is changed and saved
-     * @callback Cllback to execute
+     * @param callback Callback to execute
     **/
     public void addChangeCallback(Runnable callback) {
         callbacks.add(callback);

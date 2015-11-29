@@ -9,7 +9,7 @@ import weatherproject.Config;
 public abstract class GMaps {
     /**
      * Create a new GMaps, selecting the type reading the configuration
-     * @return
+     * @return The new GMap instance
      */
     public static GMaps createGMaps() {
         switch(Config.getInstance().getDataType()) {

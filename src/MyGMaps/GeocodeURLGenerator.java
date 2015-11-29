@@ -34,7 +34,7 @@ public class GeocodeURLGenerator {
      * @param resultType Response type
      * @param placeToFind Place to find
      * @return The Geocode url
-     * @throws Exception Exception throwed if the place is not valid
+     * @throws InvalidPlace Exception throwed if the place is not valid
      */
     public static URL generateURL (int resultType, String placeToFind) throws InvalidPlace {
         StringBuilder url = new StringBuilder(geocodeURL);

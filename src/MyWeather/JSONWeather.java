@@ -9,7 +9,7 @@ import org.json.JSONObject;
 
 /**
  * API wrapper for OpenWeatherMap
- * Created by simone on 19/11/15.
+ * Created by Degiacomi Simone on 19/11/15.
  */
 public class JSONWeather extends Weather {
     /**
@@ -17,6 +17,12 @@ public class JSONWeather extends Weather {
      */
     private JSONRetriver retriver = new JSONRetriver();
 
+    /**
+     * Retrive the actual weather data
+     * @param place Coordinate of the place
+     * @param listener Listener of the data
+     * @throws InvalidPlace Exception throwed in case of invalid coordinate
+     */
     @Override
     public void getActualWeather(Coordinate place, WeatherResultListener listener) throws InvalidPlace {
         retriver.retriveResult(OpenWeatherMapURLGenerator.generateURL(place, OpenWeatherMapURLGenerator.ACTUAL_WEATHER, OpenWeatherMapURLGenerator.JSON), new DataRetrivedListener() {
@@ -40,6 +46,12 @@ public class JSONWeather extends Weather {
         });
     }
 
+    /**
+     * Retrive the weatherforecast
+     * @param place Coordinate of the place
+     * @param listener Listener of the data
+     * @throws InvalidPlace Exception throwed in case of invalid coordinate
+     */
     @Override
     public void getForecast(Coordinate place, WeatherResultListener listener) throws InvalidPlace {
         retriver.retriveResult(OpenWeatherMapURLGenerator.generateURL(place, OpenWeatherMapURLGenerator.FORECAST, OpenWeatherMapURLGenerator.JSON), new DataRetrivedListener() {

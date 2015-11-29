@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.FileInputStream;
@@ -31,9 +32,10 @@ public class WeatherProject extends Application {
     
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("../res/window.fxml"));
+        Parent root = FXMLLoader.load(WeatherProject.class.getResource("../res/window.fxml"));
         primaryStage.setTitle("WeatherProject");
-        primaryStage.setScene(new Scene(root, 700, 300));
+        primaryStage.getIcons().add(new Image(WeatherProject.class.getResourceAsStream("../res/icon.png")));
+        primaryStage.setScene(new Scene(root, 700, 400));
         primaryStage.show();
     }
 }

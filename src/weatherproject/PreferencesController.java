@@ -11,7 +11,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Created by simone on 19/11/15.
+ * Controller of the preferences window
+ * Created by Degiacomi simone on 19/11/15.
  */
 public class PreferencesController implements Initializable {
     @FXML
@@ -45,7 +46,7 @@ public class PreferencesController implements Initializable {
         proxyUser.setText(config.getString("proxyUser"));
         proxyPassword.setText(config.getString("proxyPassword"));
         dataType.setItems(FXCollections.observableArrayList(new String[]{"xml", "json"}));
-        dataType.getSelectionModel().select(0);
+        dataType.getSelectionModel().select(config.getDataType());
     }
 
     public void setDialogStage(Stage dialogStage) {

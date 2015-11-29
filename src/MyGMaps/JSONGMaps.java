@@ -7,11 +7,17 @@ import org.json.JSONObject;
 
 /**
  * JSON API Wrapper implementation
- * Created by Simone on 16/11/2015.
+ * Created by Degiacomi Simone on 16/11/2015.
  */
 public class JSONGMaps extends GMaps{
     private JSONRetriver retriver = new JSONRetriver();
 
+    /**
+     * Find the address of a place.
+     * @param place Place to find
+     * @param listener Listener of the result
+     * @throws InvalidPlace Throwed when the place is invalid
+     */
     @Override
     public void find(String place, ResultRetrivedListener listener) throws InvalidPlace {
         // Retrive the result

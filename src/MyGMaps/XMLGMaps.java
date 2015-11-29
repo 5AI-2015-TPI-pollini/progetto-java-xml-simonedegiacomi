@@ -29,6 +29,12 @@ public class XMLGMaps extends GMaps {
 
     private XMLRetriver retriver = new XMLRetriver();
 
+    /**
+     * Find the address of a place.
+     * @param place Place to find
+     * @param listener Listener of the result
+     * @throws InvalidPlace Throwed when the place is invalid
+     */
     @Override
     public void find(String place, ResultRetrivedListener listener) throws InvalidPlace {
         retriver.retriveResult(GeocodeURLGenerator.generateURL(GeocodeURLGenerator.XML, place), new DataRetrivedListener() {

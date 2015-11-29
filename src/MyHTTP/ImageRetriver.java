@@ -6,7 +6,7 @@ import java.net.URL;
 
 /**
  * Image http retriver
- * Created by Simone on 19/11/2015.
+ * Created by Degiacomi Simone on 19/11/2015.
  */
 public class ImageRetriver implements DataRetriver {
     /**

@@ -4,11 +4,11 @@
 <comment>Configuration</comment>
 <entry key="proxyIP">192.168.0.1</entry>
 <entry key="proxyUser">proxyUser</entry>
-<entry key="apiKey">secretAPIKey</entry>
+<entry key="apiKey">2de143494c0b295cca9337e1e96b00e0</entry>
 <entry key="useProxy">false</entry>
 <entry key="proxyPassword">proxyPassword</entry>
 <entry key="proxyIp">192.168.0.1</entry>
-<entry key="dataType">1</entry>
+<entry key="dataType">0</entry>
 <entry key="authenticateProxy">false</entry>
 <entry key="proxyPort">8080</entry>
 </properties>

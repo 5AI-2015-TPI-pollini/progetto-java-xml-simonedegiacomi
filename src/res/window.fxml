@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.Blend?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<VBox prefHeight="525.0" prefWidth="662.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="weatherproject.AppController">
+
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="weatherproject.AppController">
    <children>
       <MenuBar>
         <menus>
@@ -23,9 +28,9 @@
           </Menu>
         </menus>
       </MenuBar>
-      <BorderPane>
+      <BorderPane prefHeight="578.0" prefWidth="662.0">
          <left>
-            <VBox>
+            <VBox maxHeight="1.7976931348623157E308">
                <children>
                   <Label text="Search" textFill="#9f9f9f">
                      <font>
@@ -40,7 +45,7 @@
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                      </VBox.margin>
                   </TextField>
-                  <ListView fx:id="addressesList" prefHeight="412.0" prefWidth="248.0">
+                  <ListView fx:id="addressesList" prefHeight="555.0" prefWidth="248.0">
                      <VBox.margin>
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                      </VBox.margin>
@@ -83,7 +88,7 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <TableView fx:id="forecastTable" prefHeight="316.0" prefWidth="390.0">
+                  <TableView fx:id="forecastTable" prefHeight="634.0" prefWidth="390.0">
                     <columns>
                         <TableColumn fx:id="forecastIconColumn" prefWidth="75.0" text="Icon" />
                       <TableColumn fx:id="foresastDateColumn" prefWidth="75.0" text="Date" />
@@ -97,14 +102,17 @@
                </children>
             </VBox>
          </center>
+         <bottom>
+            <HBox BorderPane.alignment="CENTER">
+               <children>
+                  <Label fx:id="connectionStatus" text="Connection">
+                     <padding>
+                        <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                     </padding>
+                  </Label>
+               </children>
+            </HBox>
+         </bottom>
       </BorderPane>
-      <HBox>
-         <children>
-            <Label fx:id="connectionStatus" text="Connection" />
-         </children>
-         <VBox.margin>
-            <Insets bottom="4.0" left="4.0" />
-         </VBox.margin>
-      </HBox>
    </children>
 </VBox>

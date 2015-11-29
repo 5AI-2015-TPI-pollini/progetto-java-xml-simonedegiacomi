@@ -8,7 +8,8 @@ import java.net.URL;
 import java.net.URLConnection;
 
 /**
- * Created by Simone on 14/11/2015.
+ * JSON http retriver
+ * Created by Degiacomi Simone on 14/11/2015.
  */
 public class JSONRetriver implements DataRetriver {
 

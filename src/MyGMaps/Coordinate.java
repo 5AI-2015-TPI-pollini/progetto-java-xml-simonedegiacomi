@@ -8,7 +8,7 @@ public class Coordinate {
     private double latitude;
 
     /**
-     * Create a coordinate object from two double in String
+     * Create a coordinate object from two double insde a String
      * @param longitude Longitude
      * @param latitude Latitude
      */
@@ -17,6 +17,11 @@ public class Coordinate {
         this.latitude = Double.parseDouble(latitude);
     }
 
+    /**
+     * Create a new Coordinate from two double
+     * @param longitude Longitude
+     * @param latitude Latitude
+     */
     public Coordinate(double longitude, double latitude) {
         this.longitude = longitude;
         this.latitude = latitude;

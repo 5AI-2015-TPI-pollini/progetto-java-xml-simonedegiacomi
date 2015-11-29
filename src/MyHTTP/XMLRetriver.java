@@ -6,7 +6,7 @@ import java.net.URLConnection;
 
 /**
  * XML retriver used to download xml
- * Created by Simone on 14/11/2015.
+ * Created by Degiacomi Simone on 14/11/2015.
  */
 public class XMLRetriver implements DataRetriver {
     /**
