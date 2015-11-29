@@ -20,8 +20,8 @@
           <h2 id="project_tagline"></h2>
 
             <section id="downloads">
-              <a class="zip_download_link" href="jar.zip">Download Project files (.zip)</a>
-              <a class="zip_download_link" href="javadoc.zip">Download Project docs</a>
+              <a class="jar_download_link" href="jar.zip">Download Project files (.zip)</a>
+              <a class="docs_download_link" href="javadoc.zip">Download Project documentation</a>
             </section>
         </header>
     </div>
@@ -29,21 +29,36 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <h3>
-<a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Welcome to WeatherProject website.</h3>
+        <h3><a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Welcome to WeatherProject website.</h3>
+        <p>WeatherProject is a free software that retrives weather informations of a given address. It's easy and free to use! Download the executable or fork the project on GitHub</p>
 
-<p>Under construction</p>
+        <h3>Installation</h3>
+        <p>Install WeatherProject is very easy, you just need to install java and download the jar.zip. Once you've downloaded the jar.zip, hust unpack the jar and double click on it. If you're computer don't recognize the jar, just open a terminal and type 'java -jar WeatherProject.jar'.</p>
 
+        <h3>Configuration</h3>
+        <p>If you need to set a proxy server, you just need to go to the Files menu and then click 'Preferences'. Now set the proxy server ip and port and if it's necessary the authentication informations. Done, click save and enjoy the software! </p>
+
+        <h3>Screenshots</h3>
+        <p>Here are some screenshot of the software:</p>
+        <img src="web/images/screen1.png"/>
+        <img src="web/images/screenPreferences.png"/>
+        <h3>More informations?</h3>
+        <p>If you want to see more and detailed informations about the software, <a href="https://github.com/5AI-2015-TPI-pollini/progetto-java-xml-simonedegiacomi/wiki">click here</a> to go to the WeatherProject Official Wiki</p>
+      </section>
+    </div>
 
     <!-- FOOTER  -->
     <div id="footer_wrap" class="outer">
       <footer class="inner">
-        <p class="copyright">Progettojavaxml maintained by <a href="https://github.com/simonedegiacomi">Simone Degiacomi</a></p>
+        <p class="copyright">WeatherProject maintained by <a href="https://github.com/simonedegiacomi">Simone Degiacomi</a></p>
         <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
 
-    
-
+    <script>      
+        setInterval(function() {
+          location.reload();
+        }, 500);
+    </script>
   </body>
 </html>
